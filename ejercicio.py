@@ -58,8 +58,8 @@ def agregar_mascota(mascotas,mascota,pesomascota,edadmascota,nombremascota):
     print(f"Mascota: {nombremascota} agregada con éxito!")
 def buscar_mascota(mascotaabuscar, mascotas):
     for i in range(len(mascotas)):
-        if mascotas[i]["Nombre de la mascota"] == mascotaabuscar
-        return i
+        if mascotas[i]["Nombre de la mascota"] == mascotaabuscar:
+            return i
     return -1
 def eliminar_mascota(mascotas):
     nombre_eliminar = input("Ingresa el nombre de la mascota que desea eliminar: ")
@@ -70,3 +70,53 @@ def eliminar_mascota(mascotas):
     else:
         print(f"La mascota '{nombre_eliminar} no se encuentra registrado.")
 
+def actualizar_estado(mascotas):
+    for mascota in mascotas:
+        if mascota["Peso de la mascota"] <= 15.0:
+            mascota["adoptado"] = True
+        else:
+            mascota["adoptado"] = False
+
+def mostrar_mascotas(mascotas):
+    actualizar_estado(mascotas)
+    print("\n=== LISTA DE MASCOTAS =====")
+    if len(mascotas) == 0:
+        print("No hay mascotas registradas")
+        return 
+    for mascota in mascotas:
+        if mascota["adoptado"]:
+            estado_texto = "ADOPTADO"
+        else:
+            estado_texto = "EN ADOPCIÓN"
+            print("============= RESUMEN =============================================")
+            print(f"Nombre de la mascota: {mascota['Nombre de la mascota']}")
+            print(f"Peso de la mascota: {mascota['Peso de la mascota']}")
+            print(f"Edad de la mascota: {mascota['Edad de la mascota']}")
+            print("=====================================================================")
+        print()
+
+mascotas = []
+opcion = 0
+while opcion != 6:
+    mostrar_menu()
+    opcion = leer_opcion(opcion)
+    if opcion == 1:
+        agregar_mascota(mascotas)
+    elif opcion == 2:
+        nombre_buscar = input("Ingrese el nombre de la mascota a buscar: ")
+        posicion = buscar_mascota(mascotas,nombre_buscar)
+        if posicion != -1:
+            print(f"\nMascota encontrada en la posición: {posicion}")
+            print(f"Nombre: {mascotas[posicion]['Nombre de la mascota']}")
+            print(f"Edad: {mascotas[posicion]['Edad de la mascota']}")
+            print(f"Peso: {mascotas[posicion]['Peso de la mascota']}")
+        else:
+            print(f"\nLa mascota '{nombre_buscar}' no se encuentra registrada.")
+    elif opcion == 3:
+        eliminar_mascota(mascotas)
+    elif opcion == 4:
+        actualizar_estado(mascotas)
+    elif opcion == 5:
+        mostrar_mascotas(mascotas)
+    elif opcion == 6:
+        print("Gracias por usar el sistema. Vuelva pronto")
